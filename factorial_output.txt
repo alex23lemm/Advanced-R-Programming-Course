@@ -1,0 +1,56 @@
+$`0`
+Unit: microseconds
+                expr   min    lq    mean median   uq    max neval cld
+   factorial_loop(.) 1.185 1.185 1.53234  1.580 1.58  3.948   100   a
+ factorial_reduce(.) 1.185 1.185 1.94686  1.579 1.58 33.160   100   a
+   factorial_func(.) 1.185 1.185 1.40213  1.185 1.58  4.738   100   a
+    factorial_mem(.) 1.185 1.185 2.79164  1.579 1.58 60.792   100   a
+
+$`1`
+Unit: microseconds
+                expr   min     lq    mean median    uq    max neval cld
+   factorial_loop(.) 1.185 1.5800 1.77318  1.580 1.974  9.869   100 a  
+ factorial_reduce(.) 6.316 6.7115 7.37467  7.106 7.106 33.554   100   c
+   factorial_func(.) 1.974 1.9750 2.47189  2.369 2.370 20.528   100 ab 
+    factorial_mem(.) 1.974 2.3690 2.62982  2.369 2.764 18.949   100  b 
+
+$`6`
+Unit: microseconds
+                expr    min     lq     mean median     uq    max neval cld
+   factorial_loop(.)  2.369  2.764  3.59300  3.158  3.159 22.107   100 a  
+ factorial_reduce(.) 11.843 12.238 13.24070 12.633 12.633 39.870   100   c
+   factorial_func(.)  5.922  6.316  6.63252  6.317  6.711 15.790   100  b 
+    factorial_mem(.)  1.974  2.369  2.89823  2.764  2.764 30.396   100 a  
+
+$`11`
+Unit: microseconds
+                expr    min     lq     mean median      uq    max neval  cld
+   factorial_loop(.)  3.948  4.343  4.64298  4.737  4.7380  8.291   100  b  
+ factorial_reduce(.) 16.580 17.370 18.30541 17.765 18.1590 46.976   100    d
+   factorial_func(.)  9.475 10.067 11.11693 10.265 11.0535 42.634   100   c 
+    factorial_mem(.)  1.975  2.370  2.96540  2.764  2.7640 22.502   100 a   
+
+$`13`
+Unit: microseconds
+                expr    min     lq     mean median      uq     max neval  cld
+   factorial_loop(.)  4.737  5.133  7.48915  5.528  6.1195 146.848   100  b  
+ factorial_reduce(.) 66.714 67.898 74.77843 69.674 80.3325 173.691   100    d
+   factorial_func(.) 11.448 11.843 12.86174 12.238 13.0280  24.475   100   c 
+    factorial_mem(.)  1.974  2.369  3.09559  3.158  3.1590  15.791   100 a   
+
+$`45`
+Unit: microseconds
+                expr     min      lq      mean  median       uq     max neval  cld
+   factorial_loop(.)  15.001  15.396  20.61862  15.791  16.5800 195.402   100  b  
+ factorial_reduce(.) 100.662 102.242 112.24427 104.215 111.3205 253.431   100    d
+   factorial_func(.)  37.107  38.291  40.90101  39.081  40.6600  89.609   100   c 
+    factorial_mem(.)   1.975   2.764   4.03510   2.764   3.1590  94.346   100 a   
+
+$`63`
+Unit: microseconds
+                expr     min      lq      mean  median       uq     max neval  cld
+   factorial_loop(.)  20.922  21.712  22.85284  22.107  22.8965  54.871   100  b  
+ factorial_reduce(.) 118.426 122.374 132.10424 125.926 134.6105 219.877   100    d
+   factorial_func(.)  51.319  54.279  58.59750  56.055  58.4240 145.664   100   c 
+    factorial_mem(.)   1.974   2.567   3.80609   3.159   3.5530  59.213   100 a   
+
