@@ -4,15 +4,14 @@
 
 # Based on the instructions given on the assignments web page and on a close 
 # examination of the the code and console output provided in oop_output.txt, 
-# we decided for the following generic function / class setup using R's S3 
-# class system: 
+# we decided for the following class setup using R's S3 class system: 
 #
 #
 #          +-------------------+-------------+----------------+
 #          |     Class Name    | Method Name | Return Value   |
 #          +-------------------+-------------+----------------+
 #          |                   | print       | console output |
-#          + Longitudinal Data +-------------+----------------+
+#          + LongitudinalData  +-------------+----------------+
 #          |                   | subject     | Subject object |
 #          +-------------------+-------------+----------------+
 #          |                   | print       | console output |
@@ -21,13 +20,15 @@
 #          +                   +-------------+----------------+
 #          |                   | visit       | Visit object   |
 #          +-------------------+-------------+----------------+
+#          |       Visit       | room        | Room object    |
+#          +-------------------+-------------+----------------+
 #          |                   | print       | console output |
 #          +        Room       +-------------+----------------+
 #          |                   | summary     | Summary object |
 #          +-------------------+-------------+----------------+
 #          |      Summary      | print       | console output |
 #          +-------------------+-------------+----------------+
-
+#
 #             
 # In addition, we created the following four functions
 #           
@@ -50,14 +51,12 @@
 #
 
 
-# Load libraries ------------------ --------------------------------------------
+# Load libraries ---------------------------------------------------------------
 library(dplyr)
 library(tidyr)
 
 
-# Define utility functions -----------------------------------------------------
-
-# Define generic functions
+# Define generic functions -----------------------------------------------------
 subject <- function(ld_df, id) UseMethod("subject")
 
 visit <- function(subject, visit_numb) UseMethod("visit")
@@ -66,14 +65,15 @@ room <- function(visit, room_name) UseMethod("room")
 
 
 
-# Define methods for LongitudionalData objects
+# Define methods for LongitudionalData objects ---------------------------------
 make_LD <- function(df) {
   ld_df <- df %>% nest(-id)
   structure(ld_df, class = c("LongitudinalData"))
 }
 
-print.LongitudinalData <- function(ld_df) {
-  cat("Longitudinal dataset with", length(ld_df[["id"]]), "subjects")
+print.LongitudinalData <- function(x) {
+  cat("Longitudinal dataset with", length(x[["id"]]), "subjects")
+  invisible(x)
 }
 
 subject.LongitudinalData <- function(ld_df, id) {
@@ -84,18 +84,19 @@ subject.LongitudinalData <- function(ld_df, id) {
 }
 
 
-# Define methods for Subject objects
-print.Subject <- function(subject) {
-  cat("Subject ID:", subject[["id"]])
+# Define methods for Subject objects -------------------------------------------
+print.Subject <- function(x) {
+  cat("Subject ID:", x[["id"]])
+  invisible(x)
 }
 
-summary.Subject <- function(subject) {
-  output <- subject[["data"]] %>% 
+summary.Subject <- function(object) {
+  output <- object[["data"]] %>% 
     group_by(visit, room) %>%
     summarise(value = mean(value)) %>% 
     spread(room, value) %>% 
     as.data.frame
-  structure(list(id = subject[["id"]],
+  structure(list(id = object[["id"]],
                  output = output), class = "Summary")
 }
 
@@ -111,8 +112,7 @@ visit.Subject <- function(subject, visit_num) {
 }
 
 
-
-# Define methods for Visit objects
+# Define methods for Visit objects ---------------------------------------------
 room.Visit <- function(visit, room_name) {
   if (!room_name %in% visit[["data"]][["room"]])
     stop("Please provide a room name which was part of the visit")
@@ -125,23 +125,25 @@ room.Visit <- function(visit, room_name) {
             data = data), class = "Room")
 }
 
-# Define methods for Room objects
-print.Room <- function(room) {
-  cat("ID:", room[["id"]], "\n")
-  cat("Visit:", room[["visit_num"]], "\n")
-  cat("Room:", room[["room"]])
+# Define methods for Room objects ----------------------------------------------
+print.Room <- function(x) {
+  cat("ID:", x[["id"]], "\n")
+  cat("Visit:", x[["visit_num"]], "\n")
+  cat("Room:", x[["room"]])
+  invisible(x)
 }
 
-summary.Room <- function(room) {
-  output <- summary(room[["data"]][["value"]])
-  structure(list(id = room[["id"]],
+summary.Room <- function(object) {
+  output <- summary(object[["data"]][["value"]])
+  structure(list(id = object[["id"]],
                  output = output), class = "Summary")
 }
 
-# Define methods for Summary objects
+# Define methods for Summary objects -------------------------------------------
 print.Summary <- function(x) {
   cat("ID:", x[[1]], "\n")
-  x[[2]]
+  print(x[[2]])
+  invisible(x)
 }
 
 
